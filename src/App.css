@@ -3,6 +3,11 @@
   color: white;
   background-color: black;
   height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .App-logo {
@@ -40,10 +45,31 @@
   }
 }
 
+.InputMap {
+  display: flex;
+  flex-direction: column;
+}
+
+.Map {
+  max-width: 1000px;
+  flex-shrink: 1;
+  border-radius: 50px;
+}
+
+.MyCities {
+  border-radius: 23px;
+  border-color: rgb(42, 42, 42);
+  border-style: solid;
+  width: 25%;
+  padding: 1em;
+  overflow-y: scroll;
+  flex-grow: 1;
+  margin: 10px;
+}
+
 .CityInput {
   box-shadow: 0 5px 100px rgb(0, 42, 108);
-  width: 75%;
-  max-width: 1000px;
+  border-radius: 23px;
 }
 
 .CityInput:hover {
@@ -99,4 +125,8 @@
   90% {
     box-shadow: 0 5px 100px rgb(0, 42, 108);
   }
+}
+
+.MyCities::-webkit-scrollbar {
+  width: 0px; /* width of the entire scrollbar */
 }
