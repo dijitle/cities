@@ -1,5 +1,5 @@
 import React from "react";
-import Papa from "papaparse";
+import Map from "./Components/Map";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -43,7 +43,7 @@ function App() {
           spellcheck="false"
           placeholder="Enter city name"
         />
-        <img className="Map" alt="map" src="usa.svg" />
+        <Map />
       </div>
       <div className="MyCities">
         <ul>

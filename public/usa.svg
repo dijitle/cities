@@ -3,7 +3,7 @@
   <title>Blank map of the United States, territories not included</title>
 <defs>
 <style type="text/css">
-.state {fill:#808080}                        /* default color for all states not specified below */
+.state {fill:#505050}                        /* default color for all states not specified below */
 .borders {stroke:#000000; stroke-width:1.5}    /* color and width of borders between states */
 .dccircle {display:none}                      /* set display to yes to show the circle for the District of Columbia, or none to hide it */
 .separator1 {stroke:#B0B0B0; stroke-width:1} /* color and width of lines around Alaska and Hawaii */
@@ -13,7 +13,6 @@
 .ca,.de {fill:#FF0000}
 In this example, Kansas, Montana and Pennsylvania are colored blue, and California and Delaware are colored red.
 Place this code in the empty space below. */
-
 
 
 </style>
