@@ -40,7 +40,7 @@ function App() {
         <input
           className="CityInput fs-3 fw-bold m-3 p-3 bg-dark bg-gradient text-white"
           type="text"
-          spellcheck="false"
+          spellCheck="false"
           placeholder="Enter city name"
         />
         <Map />
