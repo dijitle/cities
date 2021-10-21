@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Map.css";
+import Place from "./Place";
 
 export default function Map() {
   const mapWidth = 959;
@@ -7,11 +8,11 @@ export default function Map() {
 
   const maxZoom = 10;
 
-  const [zoomLevel, setZoomLevel] = React.useState(0);
+  const [zoomLevel, setZoomLevel] = useState(0);
   const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
   const [mapClickedPosition, setMapClickedPosition] = useState({ x: 0, y: 0 });
-  const [clicked, setClicked] = React.useState({ x: 0, y: 0 });
-  const [mouseIsDown, setMouseIsDown] = React.useState(false);
+  const [clicked, setClicked] = useState({ x: 0, y: 0 });
+  const [mouseIsDown, setMouseIsDown] = useState(false);
 
   useEffect(
     function subscribeToWheelEvent() {
@@ -764,16 +765,13 @@ export default function Map() {
         d="m 215,493 v 55 l 36,45 m -251,-168 h 147 l 68,68 h 85 l 54,54 v 46"
       />
 
-      <circle
-        cx="615"
-        cy="211"
-        r="8"
-        fill="limegreen"
-        fill-opacity="0.5"
-        stroke="green"
-      >
-        <title>Chicago</title>
-      </circle>
+      <Place name="Chicago" lat="41.8942937" lon="-87.6454546" pop="3000000" />
+      <Place name="Seattle" lat="47.4073238" lon="-120.5757999" pop="1000000" />
     </svg>
   );
 }
+//"lat": 41.8942937,
+//"lon": -87.6454546, chicago
+
+//"lat": 47.4073238,
+//"lon": -120.5757999, seattle
