@@ -21,27 +21,39 @@ export default function Map() {
           e.preventDefault();
           const delta = Math.sign(e.deltaY);
 
-          if (zoomLevel + delta >= 0) {
+          if (zoomLevel + delta >= 0 && zoomLevel + delta < maxZoom) {
             setZoomLevel(zoomLevel + delta);
+
+            setMapPosition({
+              x:
+                mapPosition.x -
+                (mapWidth / 2 - e.offsetX) * (1 - zoomLevel / maxZoom),
+              y:
+                mapPosition.y -
+                (mapHeight / 2 - e.offsetY) * (1 - zoomLevel / maxZoom),
+            });
           }
-          setMapPosition({
-            x: e.offsetX - mapPosition.x,
-            y: e.offsetY - mapPosition.y,
-          });
         }
       };
 
       const pan = (e) => {
         if (mouseIsDown) {
           setMapPosition({
-            x: clicked.x - e.offsetX + mapClickedPosition.x,
-            y: clicked.y - e.offsetY + mapClickedPosition.y,
+            x:
+              mapClickedPosition.x +
+              (clicked.x - e.offsetX) * (1 - zoomLevel / maxZoom),
+            y:
+              mapClickedPosition.y +
+              (clicked.y - e.offsetY) * (1 - zoomLevel / maxZoom),
           });
         }
       };
       const mouseDown = (e) => {
         setClicked({ x: e.offsetX, y: e.offsetY });
-        setMapClickedPosition({ x: mapPosition.x, y: mapPosition.y });
+        setMapClickedPosition({
+          x: mapPosition.x,
+          y: mapPosition.y,
+        });
         setMouseIsDown(true);
       };
       const mouseUp = (e) => {
