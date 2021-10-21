@@ -763,6 +763,17 @@ export default function Map() {
         fill="none"
         d="m 215,493 v 55 l 36,45 m -251,-168 h 147 l 68,68 h 85 l 54,54 v 46"
       />
+
+      <circle
+        cx="615"
+        cy="211"
+        r="8"
+        fill="limegreen"
+        fill-opacity="0.5"
+        stroke="green"
+      >
+        <title>Chicago</title>
+      </circle>
     </svg>
   );
 }
