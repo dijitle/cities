@@ -25,12 +25,24 @@ export default function Map() {
             setZoomLevel(zoomLevel + delta);
 
             setMapPosition({
-              x:
-                mapPosition.x -
-                (mapWidth / 2 - e.offsetX) * (1 - zoomLevel / maxZoom),
-              y:
-                mapPosition.y -
-                (mapHeight / 2 - e.offsetY) * (1 - zoomLevel / maxZoom),
+              x: Math.min(
+                mapWidth * ((zoomLevel + delta) / maxZoom),
+                Math.max(
+                  0,
+                  mapPosition.x -
+                    (mapWidth / 2 - e.offsetX) *
+                      (1 - (zoomLevel + delta) / maxZoom)
+                )
+              ),
+              y: Math.min(
+                mapHeight * ((zoomLevel + delta) / maxZoom),
+                Math.max(
+                  0,
+                  mapPosition.y -
+                    (mapHeight / 2 - e.offsetY) *
+                      (1 - (zoomLevel + delta) / maxZoom)
+                )
+              ),
             });
           }
         }
@@ -39,12 +51,22 @@ export default function Map() {
       const pan = (e) => {
         if (mouseIsDown) {
           setMapPosition({
-            x:
-              mapClickedPosition.x +
-              (clicked.x - e.offsetX) * (1 - zoomLevel / maxZoom),
-            y:
-              mapClickedPosition.y +
-              (clicked.y - e.offsetY) * (1 - zoomLevel / maxZoom),
+            x: Math.min(
+              mapWidth * (zoomLevel / maxZoom),
+              Math.max(
+                0,
+                mapClickedPosition.x +
+                  (clicked.x - e.offsetX) * (1 - zoomLevel / maxZoom)
+              )
+            ),
+            y: Math.min(
+              mapHeight * (zoomLevel / maxZoom),
+              Math.max(
+                0,
+                mapClickedPosition.y +
+                  (clicked.y - e.offsetY) * (1 - zoomLevel / maxZoom)
+              )
+            ),
           });
         }
       };
@@ -63,11 +85,13 @@ export default function Map() {
       mapView.addEventListener("mousewheel", updateZoom);
       mapView.addEventListener("mousedown", mouseDown);
       mapView.addEventListener("mouseup", mouseUp);
+      mapView.addEventListener("mouseleave", mouseUp);
       mapView.addEventListener("mousemove", pan);
       return function () {
         mapView.removeEventListener("mousewheel", updateZoom);
         mapView.removeEventListener("mousedown", mouseDown);
         mapView.removeEventListener("mouseup", mouseUp);
+        mapView.removeEventListener("mouseleave", mouseUp);
         mapView.removeEventListener("mousemove", pan);
       };
     },
