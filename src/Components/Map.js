@@ -8,15 +8,13 @@ export default function Map() {
   const maxZoom = 10;
 
   const [zoomLevel, setZoomLevel] = React.useState(0);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [clicked, setClicked] = React.useState({ x: -100, y: -100 });
-
-  const ref = useRef(clicked);
+  const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
+  const [mapClickedPosition, setMapClickedPosition] = useState({ x: 0, y: 0 });
+  const [clicked, setClicked] = React.useState({ x: 0, y: 0 });
+  const [mouseIsDown, setMouseIsDown] = React.useState(false);
 
   useEffect(
     function subscribeToWheelEvent() {
-      ref.current = clicked;
-
       const mapView = document.getElementById("usamap");
       const updateZoom = (e) => {
         if (e.deltaY) {
@@ -26,24 +24,28 @@ export default function Map() {
           if (zoomLevel + delta >= 0) {
             setZoomLevel(zoomLevel + delta);
           }
-          setPosition({ x: e.offsetX, y: e.offsetY });
+          setMapPosition({
+            x: e.offsetX - mapPosition.x,
+            y: e.offsetY - mapPosition.y,
+          });
         }
       };
 
       const pan = (e) => {
-        if (ref.X > 0) {
-          console.log(ref);
-          setPosition({
-            x: ref.current.X - e.offsetX,
-            y: ref.current.Y - e.offsetY,
+        if (mouseIsDown) {
+          setMapPosition({
+            x: clicked.x - e.offsetX + mapClickedPosition.x,
+            y: clicked.y - e.offsetY + mapClickedPosition.y,
           });
         }
       };
       const mouseDown = (e) => {
         setClicked({ x: e.offsetX, y: e.offsetY });
+        setMapClickedPosition({ x: mapPosition.x, y: mapPosition.y });
+        setMouseIsDown(true);
       };
       const mouseUp = (e) => {
-        setClicked({ x: -100, y: -100 });
+        setMouseIsDown(false);
       };
 
       mapView.addEventListener("mousewheel", updateZoom);
@@ -57,7 +59,7 @@ export default function Map() {
         mapView.removeEventListener("mousemove", pan);
       };
     },
-    [zoomLevel, clicked, position]
+    [clicked, mouseIsDown, zoomLevel, mapPosition, mapClickedPosition]
   );
 
   return (
@@ -67,9 +69,9 @@ export default function Map() {
       width={mapWidth}
       height={mapHeight}
       viewBox={
-        position.x +
+        mapPosition.x +
         " " +
-        position.y +
+        mapPosition.y +
         " " +
         (mapWidth - mapWidth * (zoomLevel / maxZoom)) +
         " " +
